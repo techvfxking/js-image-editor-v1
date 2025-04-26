@@ -1,1 +1,5 @@
-//New changes
+import './style.css';
+const main = () =>{
+
+}
+main();
