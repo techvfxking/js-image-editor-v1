@@ -6,3 +6,203 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+
+:root {
+    --pale-purple: #E8D7FF;
+    --mimi-pink: #FFD3E8;
+    --misty-rose: #FFD7D5;
+    --nyanza: #F3FFE1;
+    --nyanza-deep: #DFFFD6;
+    --deepish-gray: #6C757D;
+    --motion-violet: #5372F0;
+}
+
+/* Add a global container max-width for better scaling */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Fix typo: justify-self -> justify-content */
+    min-height: 100vh; /* Use vh for better browser compatibility */
+    background: var(--nyanza-deep);
+    padding: 1rem; /* Add padding for smaller screens */
+}
+
+.container {
+    max-width: 90%; /* Make the container width responsive */
+    width: 56rem;
+    background: var(--nyanza);
+    border-radius: 1rem;
+    padding: 1.5rem 1.8rem 1.8rem;
+    box-shadow: 0 0.8rem 1.8rem rgba(0, 0, 0, 0.1);
+}
+
+.container h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.container .wrapper {
+    display: flex;
+    margin: 1.5rem 0;
+    min-height: 21rem;
+}
+
+.wrapper .editor-panel {
+    border: 1px solid #ccc;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    width: 18rem;
+}
+
+.editor-panel .title {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.editor-panel .options,
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.editor-panel button {
+    height: 2.5rem;
+    font-size: 0.9rem;
+    color: var(--deepish-gray);
+    margin-bottom: 0.5rem;
+    border-radius: 1rem;
+    background: var(--pale-purple);
+    border: 1px solid var(--misty-rose);
+    font-weight: 500;
+}
+
+.editor-panel .filter button {
+    width: calc(100% / 2 - 4px);
+}
+
+.editor-panel button:hover {
+    background: var(--deepish-gray);
+    color: var(--pale-purple);
+}
+
+.filter button.active {
+    color: var(--pale-purple);
+    background: var(--motion-violet);
+    background: var(--motion-violet);
+}
+
+.filter .slider {
+    margin-top: 0.8rem;
+}
+
+.filter .slider .filter-info {
+    display: flex;
+    color: var(--deepish-gray);
+    font-size: 0.95rem;
+    justify-content: space-between;
+}
+
+.filter .slider input {
+    width: 100%;
+    height: 0.5rem;
+    accent-color: var(--motion-violet);
+}
+
+.editor-panel .rotate {
+    margin-top: 1.2rem;
+}
+
+.editor-panel .rotate button {
+    width: calc(100% / 4 - 4px);
+}
+
+.wrapper .preview-img {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1.2rem;
+}
+
+.preview-img img {
+    max-width: 100%; /* Ensure images scale properly */
+    max-height: 100%; /* Ensure images scale properly */
+    object-fit: contain;
+}
+
+.controls button {
+    padding: 11px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 1rem;
+    background: var(--pale-purple);
+    text-transform: uppercase;
+}
+
+.controls .reset-filter {
+    color: var(--deepish-gray);
+    border: 1px solid var(--deepish-gray);
+}
+
+.controls .choose-img {
+    background: var(--deepish-gray);
+    color: var(--pale-purple);
+    border: 1px solid var(--deepish-gray);
+}
+
+.controls .save-img {
+    background-color: var(--motion-violet);
+    color: var(--pale-purple);
+    border: 1px solid var(--deepish-gray);
+}
+
+/* Improve responsiveness for medium screens */
+@media screen and (max-width: 760px) {
+    .container {
+        padding: 1.5rem; /* Adjust padding for medium screens */
+    }
+
+    .container .wrapper {
+        flex-wrap: wrap-reverse;
+    }
+
+    .wrapper .editor-panel {
+        width: 100%; /* Full width for editor panel */
+        margin-bottom: 1rem; /* Add spacing between sections */
+    }
+
+    .wrapper .preview-img {
+        width: 100%; /* Full width for preview image */
+        margin: 0;
+    }
+}
+
+/* Improve responsiveness for small screens */
+@media screen and (max-width: 500px) {
+    .controls button {
+        width: 100%; /* Full width buttons */
+        margin-bottom: 0.8rem; /* Adjust spacing */
+    }
+
+    .controls .row {
+        width: 100%;
+    }
+
+    .controls .row .save-img {
+        margin-left: 0;
+    }
+
+    .container h2 {
+        font-size: 1.2rem; /* Adjust font size for headings */
+    }
+
+    .editor-panel button {
+        font-size: 0.8rem; /* Adjust button font size */
+    }
+
+    .filter .slider .filter-info {
+        font-size: 0.85rem; /* Adjust slider info font size */
+    }
+}
