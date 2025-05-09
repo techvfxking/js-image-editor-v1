@@ -1,5 +1,6 @@
 import Button from "./button.component.js";
 import Label from "./label.component.js";
+import previewImg from "/img-placeholder.svg";
 
 const createFilterButtons = () => {
     const filterBtnNameArr = ["Brightness", "Saturation", "Inversion", "Grayscale"];
@@ -46,7 +47,7 @@ const AppRoot = () => {
                 </div>
             </div>
             <div class="preview-img">
-                <img src="src/assets/img-placeholder.svg" alt="Image Placeholder" />
+                <img src="${previewImg}" alt="Image Placeholder" />
             </div>
         </section>
         <section class="controls">
