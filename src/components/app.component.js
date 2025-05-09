@@ -53,6 +53,7 @@ const AppRoot = () => {
         <section class="controls">
             ${Button("Reset Filters", "reset-filter")}
             <div class="row">
+                <input type="file" class="file-input" accept="image/*" hidden/>
                 ${Button("Choose Image", "choose-img")}
                 ${Button("Save Image", "save-img")}
             </div>

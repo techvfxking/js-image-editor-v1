@@ -3,16 +3,16 @@
 export const logData = (data, type = "info") => {
     const modifiedData = returnDataWithTimeStamp(data);
     if (type === "info")
-        console.log(modifiedData);
+        console.log(modifiedData, data);
     else
-        console.error(modifiedData);
+        console.error(modifiedData, data);
 }
 
-const returnDataWithTimeStamp = (data) => {
+const returnDataWithTimeStamp = () => {
     const timeStamp = new Date();
     const formatString = "yyyy-MM-dd hh:mm:ss:zz tt";
     const formatttedDate = formatDate(timeStamp,formatString);
-    return `${formatttedDate}::: ${data}`
+    return formatttedDate;
 }
 
 //Getting the HTML Node element by Id or class name
