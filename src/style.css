@@ -35,7 +35,10 @@ body {
     padding: 1.5rem 1.8rem 1.8rem;
     box-shadow: 0 0.8rem 1.8rem rgba(0, 0, 0, 0.1);
 }
-
+.container.disable :where(.editor-panel, .reset-filter, .save-img){
+    opacity: 0.6;
+    pointer-events: none;
+}
 .container h2 {
     font-size: 1.5rem;
     font-weight: 500;
@@ -45,6 +48,7 @@ body {
     display: flex;
     margin: 1.5rem 0;
     min-height: 21rem;
+    align-items: stretch; /* Make both panels the same height */
 }
 
 .wrapper .editor-panel {
@@ -52,6 +56,12 @@ body {
     padding: 1rem 1.5rem;
     border-radius: 1rem;
     width: 18rem;
+    min-width: 16rem; /* Prevent shrinking too much */
+    background: #fff;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .editor-panel .title {
@@ -124,12 +134,22 @@ body {
     align-items: center;
     justify-content: center;
     margin-left: 1.2rem;
+    min-width: 200px;
+    min-height: 250px;
+    max-width: 600px; /* Limit max width */
+    max-height: 400px;
+    aspect-ratio: 4/3; /* Maintain aspect ratio */
+    background: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 0 8px rgba(0,0,0,0.04);
 }
 
 .preview-img img {
-    max-width: 100%; /* Ensure images scale properly */
-    max-height: 100%; /* Ensure images scale properly */
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+    display: block;
 }
 
 .controls button {

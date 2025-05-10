@@ -5,8 +5,11 @@ import previewImg from "/img-placeholder.svg";
 const createFilterButtons = () => {
     const filterBtnNameArr = ["Brightness", "Saturation", "Inversion", "Grayscale"];
     return filterBtnNameArr
-        .map((item) => Button(item, `filter-btn ${item.toLowerCase()}`))
-        .join(" ");
+        .map((item) => {
+            let classes = `filter-btn ${item.toLowerCase()}`
+            let buttonClass = item === "Brightness" ? `${classes} active` : classes;
+            return Button(item, buttonClass);
+        }).join(" ");
 };
 
 const createRotateFlipButtons = () => {
@@ -53,6 +56,7 @@ const AppRoot = () => {
         <section class="controls">
             ${Button("Reset Filters", "reset-filter")}
             <div class="row">
+                <input type="file" class="file-input" accept="image/*" hidden/>
                 ${Button("Choose Image", "choose-img")}
                 ${Button("Save Image", "save-img")}
             </div>

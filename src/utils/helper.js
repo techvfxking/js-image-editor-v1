@@ -3,23 +3,36 @@
 export const logData = (data, type = "info") => {
     const modifiedData = returnDataWithTimeStamp(data);
     if (type === "info")
-        console.log(modifiedData);
+        console.log(modifiedData, data);
     else
-        console.error(modifiedData);
+        console.error(modifiedData, data);
 }
 
-const returnDataWithTimeStamp = (data) => {
+const returnDataWithTimeStamp = () => {
     const timeStamp = new Date();
     const formatString = "yyyy-MM-dd hh:mm:ss:zz tt";
-    const formatttedDate = formatDate(timeStamp,formatString);
-    return `${formatttedDate}::: ${data}`
+    const formatttedDate = formatDate(timeStamp, formatString);
+    return formatttedDate;
 }
 
 //Getting the HTML Node element by Id or class name
-export const getElement = (identifire = "") => {
+export const getElement = (identifire = "", allowNull = false) => {
     try {
         const element = document.querySelector(identifire);
-        if (isNullOrEmpty(element)) {
+        if (!allowNull && isNullOrEmpty(element)) {
+            throw new Error(`The element we are trying to find for ${identifire}, that is 'Null' or 'Undefined'`)
+        }
+        return element;
+    } catch (error) {
+        logData(error, "error");
+        throw error;
+    }
+}
+
+export const getAllElements = (identifire = "", allowNull = false) => {
+    try {
+        const element = document.querySelectorAll(identifire);
+        if (!allowNull && isNullOrEmpty(element)) {
             throw new Error(`The element we are trying to find for ${identifire}, that is 'Null' or 'Undefined'`)
         }
         return element;
@@ -55,7 +68,7 @@ export const convertToString = (value) => {
         else
             return value;
     } catch (error) {
-        logData(`Error converting object to string: ${error}`,"error");
+        logData(`Error converting object to string: ${error}`, "error");
         return value;
     }
 
@@ -83,7 +96,7 @@ export const formatDate = (date, format = "") => {
     const minutes_ = pad(dateObj.getMinutes());
     const seconds_ = pad(dateObj.getSeconds());
     const milliSeconds_ = pad(dateObj.getMilliseconds());
-    
+
     const tt_ = isAM ? "AM" : "PM";
 
     const monthStrings = {
