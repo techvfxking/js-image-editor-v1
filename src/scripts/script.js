@@ -88,7 +88,7 @@ const mainScript = () => {
     });
 
     addEvent("click", resetFilterBtn, (event) => {
-        resetFilterBtnClick(event, filterSliderInput, filterValue);
+        resetFilterBtnClick(event, filterOptions);
     });
 }
 
@@ -158,45 +158,15 @@ const applyFilter = () => {
     imageElement.style.transform = `rotate(${_rotate}deg) scale(${_flipHorizontal}, ${_flipVertical})`;
 }
 
-const resetFilterBtnClick = (event, filterSliderInput = Element, filterValue = Element) => {
-    const activeElement = getActiveButtonElement();
+const resetFilterBtnClick = (event, filterOptions) => {
 
-    if (isNullOrEmpty(activeElement)) {
-        alert("No active button element found");
-        return;
-    }
+    _brightness = 100; _saturation = 100; _inversion = 0; _grayscale = 0;
 
-    _brightness = 100;
-    _saturation = 100;
-    _inversion = 0;
-    _grayscale = 0;
+    _rotate = 0; _flipHorizontal = 1; _flipVertical = 1;
 
-    _rotate = 0;
-    _flipHorizontal = 1;
-    _flipVertical = 1;
-
+    filterOptions[0].click();
     applyFilter();
 
-    if (activeElement.classList.contains("brightness")) {
-        filterSliderInput.max = "200";
-        filterSliderInput.value = _brightness;
-        filterValue.innerText = `${_brightness}%`;
-    }
-    else if (activeElement.classList.contains("saturation")) {
-        filterSliderInput.max = "200";
-        filterSliderInput.value = _saturation;
-        filterValue.innerText = `${_saturation}%`;
-    }
-    else if (activeElement.classList.contains("inversion")) {
-        filterSliderInput.max = "100";
-        filterSliderInput.value = _inversion;
-        filterValue.innerText = `${_inversion}%`;
-    }
-    else if (activeElement.classList.contains("grayscale")) {
-        filterSliderInput.max = "100";
-        filterSliderInput.value = _grayscale;
-        filterValue.innerText = `${_grayscale}%`;
-    }
 }
 
 
