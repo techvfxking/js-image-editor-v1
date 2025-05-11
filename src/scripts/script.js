@@ -13,6 +13,7 @@ const mainScript = () => {
     const filterName = getElement(".filter-info .name");
     const filterValue = getElement(".filter-info .value");
     const filterSliderInput = getElement(".slider input");
+    const resetFilterBtn = getElement(".reset-filter");
 
     addEvent("click", uploadBtn, (event) => {
         btnClick(event, fileInput);
@@ -75,7 +76,7 @@ const mainScript = () => {
             } else if (node.classList.contains("vertical")) {
                 _flipHorizontal = _flipHorizontal === 1 ? -1 : 1
             } else if (node.classList.contains("horizontal")) {
-                 _flipVertical = _flipVertical === 1 ? -1 : 1
+                _flipVertical = _flipVertical === 1 ? -1 : 1
             }
 
             applyFilter();
@@ -84,7 +85,11 @@ const mainScript = () => {
 
     addEvent("input", filterSliderInput, (event) => {
         updateFilterValue(event, filterSliderInput, filterValue);
-    })
+    });
+
+    addEvent("click", resetFilterBtn, (event) => {
+        resetFilterBtnClick(event, filterSliderInput, filterValue);
+    });
 }
 
 const getImageAreaAndElement = () => {
@@ -112,18 +117,20 @@ const onAfterLoadImage = (event) => {
     const staus = container.classList.contains("disable");
     if (staus)
         container.classList.remove("disable");
+    const { imageArea } = getImageAreaAndElement();
+    imageArea.removeEventListener("click", btnClick, true);
 }
 
 const updateFilterValue = (event, filterSliderInput = Element, filterValue = Element) => {
-    let value = Number(filterSliderInput.value);
-    filterValue.innerText = `${value}%`;
-
     const activeElement = getActiveButtonElement();
 
     if (isNullOrEmpty(activeElement)) {
         alert("No active button element found");
         return;
     }
+
+    let value = Number(filterSliderInput.value);
+    filterValue.innerText = `${value}%`;
 
     if (activeElement.classList.contains("brightness")) {
         _brightness = value;
@@ -149,6 +156,47 @@ const applyFilter = () => {
     const { imageElement } = getImageAreaAndElement();
     imageElement.style.filter = `brightness(${_brightness}%) saturate(${_saturation}%) invert(${_inversion}%) grayscale(${_grayscale}%)`;
     imageElement.style.transform = `rotate(${_rotate}deg) scale(${_flipHorizontal}, ${_flipVertical})`;
+}
+
+const resetFilterBtnClick = (event, filterSliderInput = Element, filterValue = Element) => {
+    const activeElement = getActiveButtonElement();
+
+    if (isNullOrEmpty(activeElement)) {
+        alert("No active button element found");
+        return;
+    }
+
+    _brightness = 100;
+    _saturation = 100;
+    _inversion = 0;
+    _grayscale = 0;
+
+    _rotate = 0;
+    _flipHorizontal = 1;
+    _flipVertical = 1;
+
+    applyFilter();
+
+    if (activeElement.classList.contains("brightness")) {
+        filterSliderInput.max = "200";
+        filterSliderInput.value = _brightness;
+        filterValue.innerText = `${_brightness}%`;
+    }
+    else if (activeElement.classList.contains("saturation")) {
+        filterSliderInput.max = "200";
+        filterSliderInput.value = _saturation;
+        filterValue.innerText = `${_saturation}%`;
+    }
+    else if (activeElement.classList.contains("inversion")) {
+        filterSliderInput.max = "100";
+        filterSliderInput.value = _inversion;
+        filterValue.innerText = `${_inversion}%`;
+    }
+    else if (activeElement.classList.contains("grayscale")) {
+        filterSliderInput.max = "100";
+        filterSliderInput.value = _grayscale;
+        filterValue.innerText = `${_grayscale}%`;
+    }
 }
 
 
