@@ -13,14 +13,15 @@ const createFilterButtons = () => {
 };
 
 const createRotateFlipButtons = () => {
+
     const roateFlipBtnNameArr = [
-        `<i class="fa-solid fa-rotate-left"></i>`,
-        `<i class="fa-solid fa-rotate-right"></i>`,
-        `<i class="bx bx-reflect-vertical"></i>`,
-        `<i class="bx bx-reflect-horizontal"></i>`,
+        { name: `<i class="fa-solid fa-rotate-left"></i>`, class: `left` },
+        { name: `<i class="fa-solid fa-rotate-right"></i>`, class: `right` },
+        { name: `<i class="bx bx-reflect-vertical"></i>`, class: `vertical` },
+        { name: `<i class="bx bx-reflect-horizontal"></i>`, class: `horizontal` },
     ];
     return roateFlipBtnNameArr
-        .map((item, index) => Button(item, `rotate-flip-btn rotate-${index}`))
+        .map((item, index) => Button(item.name, `rotate-flip-btn rotate-${index} ${item.class}`))
         .join(" ");
 };
 
