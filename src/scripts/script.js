@@ -7,6 +7,7 @@ let _rotate = 0, _flipHorizontal = 1, _flipVertical = 1;
 const mainScript = () => {
     const fileInput = getElement(".file-input");
     const uploadBtn = getElement(".choose-img");
+    const saveBtn = getElement(".save-img");
     const { imageArea, imageElement } = getImageAreaAndElement();
     const filterOptions = getAllElements(".filter button");
     const rotateOptions = getAllElements(".rotate button");
@@ -90,6 +91,10 @@ const mainScript = () => {
     addEvent("click", resetFilterBtn, (event) => {
         resetFilterBtnClick(event, filterOptions);
     });
+
+    addEvent("click", saveBtn, (event) => {
+        saveImageProcess(event);
+    })
 }
 
 const getImageAreaAndElement = () => {
@@ -99,20 +104,28 @@ const getImageAreaAndElement = () => {
     return { imageArea, imageElement }
 }
 
-const btnClick = (event, fileInput = Element) => {
+const btnClick = (event = Event, fileInput = Element) => {
     fileInput.click();
 }
 
-const loadImage = (event, fileInput = Element, previewImg = Element) => {
+const loadImage = (event = Event, fileInput = Element, previewImg = Element) => {
     let file = fileInput.files[0];
     if (isNullOrEmpty(file))
         return;
+
+    _brightness = 100; _saturation = 100; _inversion = 0; _grayscale = 0;
+    _rotate = 0; _flipHorizontal = 1; _flipVertical = 1;
+    const filterOptions = getAllElements(".filter button");
+    if (filterOptions && filterOptions.length > 0) {
+        filterOptions[0].click();
+    }
+    applyFilter();
 
     previewImg.src = URL.createObjectURL(file);
     addEvent("load", previewImg, onAfterLoadImage)
 }
 
-const onAfterLoadImage = (event) => {
+const onAfterLoadImage = (event = Event) => {
     const container = getElement(".container");
     const staus = container.classList.contains("disable");
     if (staus)
@@ -121,7 +134,7 @@ const onAfterLoadImage = (event) => {
     imageArea.removeEventListener("click", btnClick, true);
 }
 
-const updateFilterValue = (event, filterSliderInput = Element, filterValue = Element) => {
+const updateFilterValue = (event = Event, filterSliderInput = Element, filterValue = Element) => {
     const activeElement = getActiveButtonElement();
 
     if (isNullOrEmpty(activeElement)) {
@@ -158,7 +171,7 @@ const applyFilter = () => {
     imageElement.style.transform = `rotate(${_rotate}deg) scale(${_flipHorizontal}, ${_flipVertical})`;
 }
 
-const resetFilterBtnClick = (event, filterOptions) => {
+const resetFilterBtnClick = (event = Event, filterOptions) => {
 
     _brightness = 100; _saturation = 100; _inversion = 0; _grayscale = 0;
 
@@ -167,6 +180,63 @@ const resetFilterBtnClick = (event, filterOptions) => {
     filterOptions[0].click();
     applyFilter();
 
+}
+
+const saveImageProcess = (event = Event) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const { imageElement } = getImageAreaAndElement();
+
+    const angle = ((_rotate % 360) + 360) % 360;
+    const rad = angle * Math.PI / 180;
+
+    let drawWidth = imageElement.naturalWidth;
+    let drawHeight = imageElement.naturalHeight;
+    if (angle === 90 || angle === 270) {
+        canvas.width = drawHeight;
+        canvas.height = drawWidth;
+    } else {
+        canvas.width = drawWidth;
+        canvas.height = drawHeight;
+    }
+
+    ctx.filter = imageElement.style.filter;
+
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(rad);
+    ctx.scale(_flipHorizontal, _flipVertical);
+    if (angle === 90) {
+        ctx.drawImage(
+            imageElement,
+            -drawWidth / 2,
+            -drawHeight / 2,
+            drawWidth,
+            drawHeight
+        );
+    } else if (angle === 270) {
+        ctx.drawImage(
+            imageElement,
+            -drawWidth / 2,
+            -drawHeight / 2,
+            drawWidth,
+            drawHeight
+        );
+    } else {
+        ctx.drawImage(
+            imageElement,
+            -drawWidth / 2,
+            -drawHeight / 2,
+            drawWidth,
+            drawHeight
+        );
+    }
+    ctx.restore();
+
+    const link = document.createElement("a");
+    link.download = `${new Date().getTime()}.jpg`;
+    link.href = canvas.toDataURL();
+    link.click();
 }
 
 

@@ -21,24 +21,30 @@
 body {
     display: flex;
     align-items: center;
-    justify-content: center; /* Fix typo: justify-self -> justify-content */
-    min-height: 100vh; /* Use vh for better browser compatibility */
+    justify-content: center;
+    /* Fix typo: justify-self -> justify-content */
+    min-height: 100vh;
+    /* Use vh for better browser compatibility */
     background: var(--nyanza-deep);
-    padding: 1rem; /* Add padding for smaller screens */
+    padding: 1rem;
+    /* Add padding for smaller screens */
 }
 
 .container {
-    max-width: 90%; /* Make the container width responsive */
+    max-width: 90%;
+    /* Make the container width responsive */
     width: 56rem;
     background: var(--nyanza);
     border-radius: 1rem;
     padding: 1.5rem 1.8rem 1.8rem;
     box-shadow: 0 0.8rem 1.8rem rgba(0, 0, 0, 0.1);
 }
-.container.disable :where(.editor-panel, .reset-filter, .save-img){
+
+.container.disable :where(.editor-panel, .reset-filter, .save-img) {
     opacity: 0.6;
     pointer-events: none;
 }
+
 .container h2 {
     font-size: 1.5rem;
     font-weight: 500;
@@ -48,7 +54,8 @@ body {
     display: flex;
     margin: 1.5rem 0;
     min-height: 21rem;
-    align-items: stretch; /* Make both panels the same height */
+    align-items: stretch;
+    /* Make both panels the same height */
 }
 
 .wrapper .editor-panel {
@@ -56,7 +63,8 @@ body {
     padding: 1rem 1.5rem;
     border-radius: 1rem;
     width: 18rem;
-    min-width: 16rem; /* Prevent shrinking too much */
+    min-width: 12rem;
+    /* Prevent shrinking too much */
     background: #fff;
     box-sizing: border-box;
     display: flex;
@@ -136,13 +144,15 @@ body {
     margin-left: 1.2rem;
     min-width: 200px;
     min-height: 250px;
-    max-width: 600px; /* Limit max width */
+    max-width: 600px;
+    /* Limit max width */
     max-height: 400px;
-    aspect-ratio: 4/3; /* Maintain aspect ratio */
+    aspect-ratio: 4/3;
+    /* Maintain aspect ratio */
     background: #fff;
     border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 0 0 8px rgba(0,0,0,0.04);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
 }
 
 .preview-img img {
@@ -181,7 +191,8 @@ body {
 /* Improve responsiveness for medium screens */
 @media screen and (max-width: 760px) {
     .container {
-        padding: 1.5rem; /* Adjust padding for medium screens */
+        padding: 1.5rem;
+        /* Adjust padding for medium screens */
     }
 
     .container .wrapper {
@@ -189,12 +200,16 @@ body {
     }
 
     .wrapper .editor-panel {
-        width: 100%; /* Full width for editor panel */
-        margin-bottom: 1rem; /* Add spacing between sections */
+        width: 100%;
+        /* Full width for editor panel */
+        margin-bottom: 1rem;
+        /* Add spacing between sections */
+        margin-top: 1rem;
     }
 
     .wrapper .preview-img {
-        width: 100%; /* Full width for preview image */
+        width: 100%;
+        /* Full width for preview image */
         margin: 0;
     }
 }
@@ -202,8 +217,10 @@ body {
 /* Improve responsiveness for small screens */
 @media screen and (max-width: 500px) {
     .controls button {
-        width: 100%; /* Full width buttons */
-        margin-bottom: 0.8rem; /* Adjust spacing */
+        width: 100%;
+        /* Full width buttons */
+        margin-bottom: 0.8rem;
+        /* Adjust spacing */
     }
 
     .controls .row {
@@ -215,14 +232,25 @@ body {
     }
 
     .container h2 {
-        font-size: 1.2rem; /* Adjust font size for headings */
+        font-size: 1.2rem;
+        /* Adjust font size for headings */
     }
 
     .editor-panel button {
-        font-size: 0.8rem; /* Adjust button font size */
+        font-size: 0.8rem;
+        /* Adjust button font size */
     }
 
     .filter .slider .filter-info {
-        font-size: 0.85rem; /* Adjust slider info font size */
+        font-size: 0.85rem;
+        /* Adjust slider info font size */
+    }
+
+    .wrapper .editor-panel {
+        width: 100%;
+        /* Full width for editor panel */
+        margin-bottom: 1rem;
+        /* Add spacing between sections */
+        margin-top: 1rem;
     }
 }
